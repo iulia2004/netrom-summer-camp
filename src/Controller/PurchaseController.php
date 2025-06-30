@@ -2,17 +2,20 @@
 
 namespace App\Controller;
 
+use App\Repository\PurchaseRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Annotation\Route;
 
-final class PurchaseController extends AbstractController
+class PurchaseController extends AbstractController
 {
-    #[Route('/purchase', name: 'app_purchase')]
-    public function index(): Response
+    #[Route('/purchases', name: 'app_purchase_index')]
+    public function index(PurchaseRepository $purchaseRepository): Response
     {
+        $purchases = $purchaseRepository->findAll();
+
         return $this->render('purchase/index.html.twig', [
-            'controller_name' => 'PurchaseController',
+            'purchases' => $purchases,
         ]);
     }
 }

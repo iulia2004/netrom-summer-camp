@@ -7,7 +7,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Clock\DatePoint;
 
 #[ORM\Entity(repositoryClass: FestivalRepository::class)]
 class Festival
@@ -23,11 +22,11 @@ class Festival
     #[ORM\Column(length: 255)]
     private ?string $location = null;
 
-    #[ORM\Column(type: 'date_point')]
-    private ?DatePoint $start_date = null;
+    #[ORM\Column(type: 'date')]
+    private ?\DateTimeInterface $start_date = null;
 
-    #[ORM\Column(type: 'date_point')]
-    private ?DatePoint $end_date = null;
+    #[ORM\Column(type: 'date')]
+    private ?\DateTimeInterface $end_date = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
     private ?string $price = null;
@@ -79,24 +78,24 @@ class Festival
         return $this;
     }
 
-    public function getStartDate(): ?DatePoint
+    public function getStartDate(): ?\DateTimeInterface
     {
         return $this->start_date;
     }
 
-    public function setStartDate(DatePoint $start_date): static
+    public function setStartDate(?\DateTimeInterface $start_date): static
     {
         $this->start_date = $start_date;
 
         return $this;
     }
 
-    public function getEndDate(): ?DatePoint
+    public function getEndDate(): ?\DateTimeInterface
     {
         return $this->end_date;
     }
 
-    public function setEndDate(DatePoint $end_date): static
+    public function setEndDate(?\DateTimeInterface $end_date): static
     {
         $this->end_date = $end_date;
 
