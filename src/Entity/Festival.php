@@ -34,13 +34,13 @@ class Festival
     /**
      * @var Collection<int, FestivalArtist>
      */
-    #[ORM\OneToMany(targetEntity: FestivalArtist::class, mappedBy: 'festival')]
+    #[ORM\OneToMany(targetEntity: FestivalArtist::class, mappedBy: 'festival', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $festivalArtists;
 
     /**
      * @var Collection<int, Purchase>
      */
-    #[ORM\OneToMany(targetEntity: Purchase::class, mappedBy: 'festival')]
+    #[ORM\OneToMany(targetEntity: Purchase::class, mappedBy: 'festival', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $purchases;
 
     public function __construct()

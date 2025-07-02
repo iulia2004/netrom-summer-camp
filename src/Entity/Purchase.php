@@ -14,9 +14,11 @@ class Purchase
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'purchases')]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'purchases')]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?Festival $festival = null;
 
     public function getId(): ?int

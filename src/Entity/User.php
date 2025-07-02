@@ -30,7 +30,7 @@ class User
     /**
      * @var Collection<int, Purchase>
      */
-    #[ORM\OneToMany(targetEntity: Purchase::class, mappedBy: 'user')]
+    #[ORM\OneToMany(targetEntity: Purchase::class, mappedBy: 'user', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $purchases;
 
     public function __construct()
@@ -116,6 +116,26 @@ class User
             if ($purchase->getUser() === $this) {
                 $purchase->setUser(null);
             }
+        }
+
+        return $this;
+    }
+
+    #[ORM\OneToOne(mappedBy: 'user', targetEntity: UserDetails::class, cascade: ['remove'])]
+    private ?UserDetails $userDetails = null;
+
+    public function getUserDetails(): ?UserDetails
+    {
+        return $this->userDetails;
+    }
+
+    public function setUserDetails(?UserDetails $userDetails): static
+    {
+        $this->userDetails = $userDetails;
+
+        // Synchronize the inverse side
+        if ($userDetails !== null && $userDetails->getUser() !== $this) {
+            $userDetails->setUser($this);
         }
 
         return $this;

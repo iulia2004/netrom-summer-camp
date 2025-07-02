@@ -40,4 +40,10 @@ class ArtistRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function remove(Artist $artist): void
+    {
+        $this->getEntityManager()->remove($artist);
+        $this->getEntityManager()->flush();
+    }
 }

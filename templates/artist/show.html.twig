@@ -1,4 +1,4 @@
-{% block title %}Festival Artists List{% endblock %}
+{% block title %}Artist{% endblock %}
 
 {% block body %}
     <style>
@@ -26,28 +26,22 @@
         }
     </style>
 
-    <h1 style="text-align:center; color: white;">Festival Artists</h1>
+    <h1 style="text-align:center; color: white;">Artists</h1>
 
     <table>
         <thead>
         <tr>
-            <th>Festival Name</th>
-            <th>Artist Name</th>
+            <th>Name</th>
             <th>Musical Genre</th>
         </tr>
         </thead>
         <tbody>
-        {% for fa in festivalArtists %}
+        {% block artist %}
             <tr>
-                <td>{{ fa.festival.name }}</td>
-                <td>{{ fa.artist.name }}</td>
-                <td>{{ fa.artist.musicalGenre }}</td>
+                <td>{{ artist.name }}</td>
+                <td>{{ artist.musicalGenre }}</td>
             </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">No festival artists found.</td>
-            </tr>
-        {% endfor %}
+        {% endblock %}
         </tbody>
     </table>
 {% endblock %}

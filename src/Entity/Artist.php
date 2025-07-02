@@ -24,7 +24,12 @@ class Artist
     /**
      * @var Collection<int, FestivalArtist>
      */
-    #[ORM\OneToMany(targetEntity: FestivalArtist::class, mappedBy: 'artist')]
+    #[ORM\OneToMany(
+        targetEntity: FestivalArtist::class,
+        mappedBy: 'artist',
+        cascade: ['remove'],
+        orphanRemoval: true
+    )]
     private Collection $festivalArtists;
 
     public function __construct()
