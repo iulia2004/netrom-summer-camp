@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2b905675e0813f384b98c631d210c590",
+    "content-hash": "c006ab859c27346b6246f622eb7470c6",
     "packages": [
         {
             "name": "composer/semver",
@@ -3467,16 +3467,16 @@
         },
         {
             "name": "symfony/form",
-            "version": "v7.3.0",
+            "version": "v7.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/form.git",
-                "reference": "9ee0a686d9256b8f780a87b5ff78d4ddee025409"
+                "reference": "e06b02dd21b33b0cd7bb942c7e446ef7b22a2a5a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/form/zipball/9ee0a686d9256b8f780a87b5ff78d4ddee025409",
-                "reference": "9ee0a686d9256b8f780a87b5ff78d4ddee025409",
+                "url": "https://api.github.com/repos/symfony/form/zipball/e06b02dd21b33b0cd7bb942c7e446ef7b22a2a5a",
+                "reference": "e06b02dd21b33b0cd7bb942c7e446ef7b22a2a5a",
                 "shasum": ""
             },
             "require": {
@@ -3544,7 +3544,7 @@
             "description": "Allows to easily create, process and reuse HTML forms",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/form/tree/v7.3.0"
+                "source": "https://github.com/symfony/form/tree/v7.3.1"
             },
             "funding": [
                 {
@@ -3560,7 +3560,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-05-04T12:58:53+00:00"
+            "time": "2025-06-13T07:48:40+00:00"
         },
         {
             "name": "symfony/framework-bundle",
@@ -9801,6 +9801,7 @@
     "platform": {
         "php": ">=8.2",
         "ext-ctype": "*",
+        "ext-http": "*",
         "ext-iconv": "*"
     },
     "platform-dev": {},

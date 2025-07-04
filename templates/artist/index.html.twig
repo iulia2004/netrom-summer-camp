@@ -24,6 +24,7 @@
             background-color: #a77bd4;
             color: white;
         }
+
     </style>
 
     <h1 style="text-align:center; color: white;">Artists</h1>
@@ -42,9 +43,13 @@
                 <td>{{ artist.name }}</td>
                 <td>{{ artist.musicalGenre }}</td>
                 <td>
-                    <form method="post" action="{{ path('artist_delete', {'id': artist.id}) }}" onsubmit="return confirm('Are you sure?');">
+                    <form method="post" action="{{ path('artist_delete', {'id': artist.id}) }}"
+                          onsubmit="return confirm('Are you sure?');">
                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ artist.id) }}">
                         <button class="btn-danger">Delete</button>
+                    </form>
+                    <form method="post" action="{{ path('artist_update', {'id': artist.id}) }}">
+                        <button type="submit">Update</button>
                     </form>
                 </td>
             </tr>
@@ -55,4 +60,11 @@
         {% endfor %}
         </tbody>
     </table>
+    <div style="text-align: center; margin-top: 20px;">
+        <form method="post" action="{{ path('artist_add') }}">
+            <button type="submit">Add</button>
+        </form>
+    </div>
 {% endblock %}
+
+

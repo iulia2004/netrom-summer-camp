@@ -1,11 +1,63 @@
-{% block title %}Welcome{% endblock %}
-
 {% block body %}
-    <h1>Welcome to ShowTime</h1>
+    <style>
+        body {
+            background-color: #bf6fed;
+            font-size: 18px;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            display: flex;
+            justify-content: flex-end;
+            padding: 1rem 2rem;
+            background-color: #a14dd4;
+        }
+        .header a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .header a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            text-align: center;
+            margin-top: 100px;
+        }
+        h1 {
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 2rem;
+        }
+        .options a {
+            display: block;
+            margin: 1rem auto;
+            padding: 1rem 2rem;
+            max-width: 300px;
+            background-color: white;
+            color: #a14dd4;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .options a:hover {
+            background-color: #e2c4f5;
+        }
+    </style>
 
-    <ul style="font-size: 20px; list-style-type: none; padding: 0;">
-        <li><a href="{{ path('user_index') }}">Users</a></li>
-        <li><a href="{{ path('festival_index') }}">Festivals</a></li>
-        <li><a href="{{ path('artist_index') }}">Artists</a></li>
-    </ul>
+    <div class="header">
+        <a href="{{ path('app_user_details_index') }}">Account</a>
+    </div>
+
+    <div class="container">
+        <h1>Welcome to ShowTime</h1>
+
+        <div class="options">
+            <a href="{{ path('festival_index') }}">Find Your Festival</a>
+            <a href="{{ path('artist_index') }}">Check Out Where an Artist is Performing</a>
+        </div>
+    </div>
 {% endblock %}

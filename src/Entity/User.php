@@ -121,7 +121,7 @@ class User
         return $this;
     }
 
-    #[ORM\OneToOne(mappedBy: 'user', targetEntity: UserDetails::class, cascade: ['remove'])]
+    #[ORM\OneToOne(targetEntity: UserDetails::class, mappedBy: 'user', cascade: ['remove'])]
     private ?UserDetails $userDetails = null;
 
     public function getUserDetails(): ?UserDetails

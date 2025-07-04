@@ -1,4 +1,4 @@
-{% block title %}Festival Artists List{% endblock %}
+{% block title %}Artists{% endblock %}
 
 {% block body %}
     <style>
@@ -26,33 +26,30 @@
         }
     </style>
 
-    <h1 style="text-align:center; color: white;">Festival Artists</h1>
+    {% if festival is defined %}
+        <h1 style="text-align:center; color: white;">Artists at {{ festival.name }}</h1>
+    {% else %}
+        <h1 style="text-align:center; color: white;">Artists</h1>
+    {% endif %}
 
     <table>
         <thead>
         <tr>
-            <th>Festival Name</th>
-            <th>Artist Name</th>
+            <th>Name</th>
             <th>Musical Genre</th>
         </tr>
         </thead>
         <tbody>
-        {% for fa in festivalArtists %}
+        {% for artist in artists %}
             <tr>
-                <td>{{ fa.festival.name }}</td>
-                <td>{{ fa.artist.name }}</td>
-                <td>{{ fa.artist.musicalGenre }}</td>
+                <td>{{ artist.name }}</td>
+                <td>{{ artist.musicalGenre }}</td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">No festival artists found.</td>
+                <td colspan="2">No artists found.</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-    <div style="text-align: center; margin-top: 20px;">
-        <form method="post" action="{{ path('lineup_add') }}">
-            <button type="submit">Add</button>
-        </form>
-    </div>
 {% endblock %}
