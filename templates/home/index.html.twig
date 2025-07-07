@@ -49,11 +49,17 @@
     </style>
 
     <div class="header">
-        <a href="{{ path('app_user_details_index') }}">Account</a>
+        {% if app.user %}
+            <a href="{{ path('app_user_details_show', {'id': app.user.id}) }}">Account</a>
+        {% else %}
+            <a href="{{ path('app_login') }}">Login</a>
+        {% endif %}
     </div>
 
+
+
     <div class="container">
-        <h1>Welcome to ShowTime</h1>
+        <h1>Welcome to ShowTime!</h1>
 
         <div class="options">
             <a href="{{ path('festival_index') }}">Find Your Festival</a>

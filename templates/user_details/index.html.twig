@@ -38,18 +38,19 @@
         </tr>
         </thead>
         <tbody>
-        {% for detail in details %}
+        {% block details %}
             <tr>
-                <td>{{ detail.name }}</td>
-                <td>{{ detail.age }}</td>
-                <td>{{ detail.email }}</td>
-                <td>{{ detail.role }}</td>
+                <td>{{ details.name }}</td>
+                <td>{{ details.age }}</td>
+                <td>{{ details.email }}</td>
+                <td>{{ details.role }}</td>
             </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">No user details found.</td>
-            </tr>
-        {% endfor %}
+        {% endblock %}
         </tbody>
     </table>
+    <div style="text-align: center; margin-top: 20px;">
+        <form action="{{ path('app_logout') }}" method="post">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
 {% endblock %}

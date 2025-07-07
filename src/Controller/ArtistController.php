@@ -98,4 +98,27 @@ class ArtistController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    #[Route('/artist/{id}/festivals', name: 'artist_festivals')]
+    public function showFestivals(int $id, EntityManagerInterface $entityManager): Response
+    {
+        $artist = $entityManager->getRepository(Artist::class)->find($id);
+
+        if (!$artist) {
+            throw $this->createNotFoundException('Artist not found');
+        }
+
+        $festivalArtists = $artist->getFestivalArtists();
+
+        $festivals = [];
+        foreach ($festivalArtists as $fa) {
+            $festivals[] = $fa->getFestival();
+        }
+
+        return $this->render('artist/festivals.html.twig', [
+            'artist' => $artist,
+            'festivals' => $festivals,
+        ]);
+    }
+
 }

@@ -1,0 +1,69 @@
+{% block title %}Festivals for {{ artist.name }}{% endblock %}
+
+{% block body %}
+    <style>
+        body {
+            background-color: #bf6fed;
+            font-size: 18px;
+            font-family: Arial, sans-serif;
+            margin: 2rem;
+        }
+        ul {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            padding: 1rem 2rem;
+            border: 1px solid #333;
+            border-radius: 8px;
+            list-style-type: none;
+        }
+        li {
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        li:last-child {
+            border-bottom: none;
+        }
+        a {
+            color: #a77bd4;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 2rem;
+        }
+        p {
+            text-align: center;
+            color: white;
+        }
+        .back-link {
+            display: block;
+            max-width: 700px;
+            margin: 2rem auto 0;
+            text-align: center;
+        }
+    </style>
+
+    <h1>Festivals Featuring {{ artist.name }}</h1>
+
+    {% if festivals is empty %}
+        <p>This artist isn't participating in any festivals.</p>
+    {% else %}
+        <ul>
+            {% for festival in festivals %}
+                <li>
+                    <a href="{{ path('festival_lineup', {'id': festival.id}) }}">
+                        {{ festival.name }} ({{ festival.startDate ? festival.startDate|date('Y-m-d') : 'N/A' }})
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <a class="back-link" href="{{ path('artist_index') }}">Back to Artists List</a>
+{% endblock %}

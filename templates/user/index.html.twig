@@ -24,6 +24,9 @@
             background-color: #a77bd4;
             color: white;
         }
+        tr:hover {
+            background-color: #f0f0f0;
+        }
     </style>
 
     <h1 style="text-align:center; color: white;">Users</h1>
@@ -32,7 +35,7 @@
         <thead>
         <tr>
             <th>Email</th>
-            <th>Role</th>
+            <th>Roles</th>
             <th>Token</th>
             <th>Edit</th>
         </tr>
@@ -41,8 +44,8 @@
         {% for user in users %}
             <tr>
                 <td>{{ user.email }}</td>
-                <td>{{ user.role }}</td>
-                <td>{{ user.token }}</td>
+                <td>{{ user.roles ? user.roles|join(', ') : 'N/A' }}</td>
+                <td>{{ user.token is defined ? user.token : '—' }}</td>
                 <td>
                     <form method="post" action="{{ path('user_delete', {'id': user.id}) }}" onsubmit="return confirm('Are you sure?');">
                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
@@ -52,7 +55,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">No users found.</td>
+                <td colspan="4" style="text-align:center;">No users found.</td>
             </tr>
         {% endfor %}
         </tbody>

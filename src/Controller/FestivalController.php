@@ -15,6 +15,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+
 
 final class FestivalController extends AbstractController
 {
@@ -28,6 +30,7 @@ final class FestivalController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/festivals/delete/{id}', name: 'festival_delete', methods: ['POST'])]
     public function deleteFestivals(int $id, FestivalRepository $festivalRepository, EntityManagerInterface $entityManager): Response
     {
@@ -43,6 +46,7 @@ final class FestivalController extends AbstractController
         return $this->redirectToRoute('festival_index');
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/festivals/add', name: 'festival_add')]
     public function addFestival(Request $request, EntityManagerInterface $entityManager): Response {
         $festival = new Festival();
@@ -69,6 +73,7 @@ final class FestivalController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/festivals/update/{id}', name: 'festival_update')]
     public function updateFestival(int $id, FestivalRepository $festivalRepository, Request $request, EntityManagerInterface $entityManager): Response {
         $festival = $festivalRepository->find($id);

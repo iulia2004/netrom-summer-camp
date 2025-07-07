@@ -40,7 +40,11 @@
         <tbody>
         {% for artist in artists %}
             <tr>
-                <td>{{ artist.name }}</td>
+                <td>
+                    <a href="{{ path('artist_festivals', {'id': artist.id}) }}">
+                        {{ artist.name }}
+                    </a>
+                </td>
                 <td>{{ artist.musicalGenre }}</td>
                 <td>
                     <form method="post" action="{{ path('artist_delete', {'id': artist.id}) }}"
