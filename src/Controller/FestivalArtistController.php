@@ -10,9 +10,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class FestivalArtistController extends AbstractController
 {
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/festival/artist', name: 'app_festival_artist')]
     public function index(FestivalArtistRepository $festivalArtistRepository): Response
     {
@@ -24,6 +26,7 @@ final class FestivalArtistController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('festival/artist/add', name: 'lineup_add')]
     public function addLineup(Request $request, EntityManagerInterface $entityManager): Response {
         $festivalArtist = new FestivalArtist();

@@ -28,8 +28,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'json')]
     private array $roles = [];
 
-//    #[ORM\Column(length: 255)]
-//    private string $token;
 
     /**
      * @var Collection<int, Purchase>
@@ -86,18 +84,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
-//    public function getToken(): ?string
-//    {
-//        return $this->token;
-//    }
-//
-//    public function setToken(string $token): static
-//    {
-//        $this->token = $token;
-//
-//        return $this;
-//    }
 
     /**
      * @return Collection<int, Purchase>

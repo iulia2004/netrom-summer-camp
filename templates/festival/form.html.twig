@@ -1,3 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <style>
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            max-width: 700px;
+            margin: 0 auto 2rem auto;
+        }
+
+        .col {
+            flex: 1 1 45%;
+            min-width: 250px;
+        }
+
+        form {
+            max-width: 700px;
+            margin: 0 auto;
+            background-color: #210d3a;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 15px #a97aff88;
+            color: #f0d7ff;
+            font-family: Arial, sans-serif;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            display: block;
+            color: #d9a3ff;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #7331a0;
+            border-radius: 6px;
+            background-color: #3a1a5c;
+            color: #f0d7ff;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #b873ff;
+            box-shadow: 0 0 6px #b873ff88;
+        }
+
+        button {
+            background: linear-gradient(135deg, #b873ff, #9c4dff);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 7px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 8px #9c4dff88;
+            margin-top: 1rem;
+            display: block;
+            width: fit-content;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #9c4dff, #b873ff);
+            box-shadow: 0 6px 12px #b873ffcc;
+        }
+    </style>
 {{ form_start(form) }}
 <div class="my-custom-class-for-errors">
     {{ form_errors(form) }}
@@ -21,3 +95,4 @@
     </div>
 </div>
 {{ form_end(form) }}
+{% endblock %}

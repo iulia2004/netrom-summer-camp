@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ArtistController extends AbstractController
 {
@@ -33,6 +34,7 @@ class ArtistController extends AbstractController
 //        ]);
 //    }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/artists/delete/{id}', name: 'artist_delete', methods: ['POST'])]
     public function deleteArtist(int $id, ArtistRepository $artistRepository, EntityManagerInterface $entityManager): Response
     {
@@ -48,6 +50,7 @@ class ArtistController extends AbstractController
         return $this->redirectToRoute('artist_index');
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/artists/add', name: 'artist_add')]
     public function addFestival(Request $request, EntityManagerInterface $entityManager): Response {
         $artist = new Artist();
@@ -72,6 +75,7 @@ class ArtistController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/artists/update/{id}', name: 'artist_update')]
     public function updateArtist(int $id, ArtistRepository $artistRepository, Request $request, EntityManagerInterface $entityManager): Response {
         $artist = $artistRepository->find($id);

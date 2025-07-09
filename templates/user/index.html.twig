@@ -1,34 +1,6 @@
-{% block title %}Users List{% endblock %}
+{% extends 'base.html.twig' %}
 
 {% block body %}
-    <style>
-        body {
-            background-color: #bf6fed;
-            font-size: 18px;
-            font-family: Arial, sans-serif;
-            margin: 2rem;
-        }
-        table {
-            width: 100%;
-            max-width: 700px;
-            border-collapse: collapse;
-            margin: 0 auto;
-            background: white;
-        }
-        th, td {
-            border: 1px solid #333;
-            padding: 10px 15px;
-            text-align: left;
-        }
-        th {
-            background-color: #a77bd4;
-            color: white;
-        }
-        tr:hover {
-            background-color: #f0f0f0;
-        }
-    </style>
-
     <h1 style="text-align:center; color: white;">Users</h1>
 
     <table>
@@ -36,7 +8,6 @@
         <tr>
             <th>Email</th>
             <th>Roles</th>
-            <th>Token</th>
             <th>Edit</th>
         </tr>
         </thead>
@@ -45,11 +16,13 @@
             <tr>
                 <td>{{ user.email }}</td>
                 <td>{{ user.roles ? user.roles|join(', ') : 'N/A' }}</td>
-                <td>{{ user.token is defined ? user.token : '—' }}</td>
                 <td>
                     <form method="post" action="{{ path('user_delete', {'id': user.id}) }}" onsubmit="return confirm('Are you sure?');">
                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
                         <button class="btn-danger">Delete</button>
+                    </form>
+                    <form method="post" action="{{ path('user_update', {'id': user.id}) }}">
+                        <button type="submit">Update</button>
                     </form>
                 </td>
             </tr>

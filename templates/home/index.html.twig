@@ -1,62 +1,63 @@
+{% extends 'base.html.twig' %}
+
 {% block body %}
     <style>
         body {
-            background-color: #bf6fed;
+            background-image: url('https://cdnb.artstation.com/p/assets/images/images/044/232/685/original/carly-meyerhardt-music-v2-skylights1.gif?1639446675');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
             font-size: 18px;
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            min-height: 100vh;
+            color: #eee;
         }
-        .header {
-            display: flex;
-            justify-content: flex-end;
-            padding: 1rem 2rem;
-            background-color: #a14dd4;
-        }
+
         .header a {
-            color: white;
+            color: #d5a9ff;
             text-decoration: none;
             font-weight: bold;
             font-size: 16px;
+            margin-left: 1rem;
+            transition: color 0.3s ease;
         }
         .header a:hover {
+            color: #fff;
             text-decoration: underline;
         }
         .container {
             text-align: center;
             margin-top: 100px;
+            text-shadow: 0 0 8px rgba(161, 77, 212, 0.8);
         }
         h1 {
             font-size: 3rem;
-            color: white;
+            color: #e0c6ff;
             margin-bottom: 2rem;
+            text-shadow: 0 0 15px #a14dd4;
         }
         .options a {
             display: block;
             margin: 1rem auto;
             padding: 1rem 2rem;
             max-width: 300px;
-            background-color: white;
-            color: #a14dd4;
+            background: rgba(161, 77, 212, 0.85); /* purple translucent */
+            color: white;
             text-decoration: none;
-            border-radius: 8px;
+            border-radius: 12px;
             font-weight: bold;
-            transition: background 0.3s;
+            font-size: 1.1rem;
+            box-shadow: 0 0 15px #a14dd4;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
         }
         .options a:hover {
-            background-color: #e2c4f5;
+            background: #d2a7ff;
+            box-shadow: 0 0 20px #f4dbff;
+            color: #4b007b;
         }
     </style>
-
-    <div class="header">
-        {% if app.user %}
-            <a href="{{ path('app_user_details_show', {'id': app.user.id}) }}">Account</a>
-        {% else %}
-            <a href="{{ path('app_login') }}">Login</a>
-        {% endif %}
-    </div>
-
-
 
     <div class="container">
         <h1>Welcome to ShowTime!</h1>

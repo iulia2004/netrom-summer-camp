@@ -1,31 +1,6 @@
-{% block title %}User Details List{% endblock %}
+{% extends 'base.html.twig' %}
 
 {% block body %}
-    <style>
-        body {
-            background-color: #bf6fed;
-            font-size: 18px;
-            font-family: Arial, sans-serif;
-            margin: 2rem;
-        }
-        table {
-            width: 100%;
-            max-width: 700px;
-            border-collapse: collapse;
-            margin: 0 auto;
-            background: white;
-        }
-        th, td {
-            border: 1px solid #333;
-            padding: 10px 15px;
-            text-align: left;
-        }
-        th {
-            background-color: #a77bd4;
-            color: white;
-        }
-    </style>
-
     <h1 style="text-align:center; color: white;">User Details</h1>
 
     <table>
@@ -33,24 +8,23 @@
         <tr>
             <th>Name</th>
             <th>Age</th>
+            <th>City</th>
             <th>Email</th>
             <th>Role</th>
         </tr>
         </thead>
         <tbody>
-        {% block details %}
+        {% for detail in details %}
             <tr>
-                <td>{{ details.name }}</td>
-                <td>{{ details.age }}</td>
-                <td>{{ details.email }}</td>
-                <td>{{ details.role }}</td>
+                <td>{{ detail.name }}</td>
+                <td>{{ detail.age }}</td>
+                <td>{{ detail.city }}</td>
             </tr>
-        {% endblock %}
+            {% else %}
+                <tr>
+                    <td colspan="4" style="text-align:center;">No users found.</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
-    <div style="text-align: center; margin-top: 20px;">
-        <form action="{{ path('app_logout') }}" method="post">
-            <button type="submit">Logout</button>
-        </form>
-    </div>
 {% endblock %}

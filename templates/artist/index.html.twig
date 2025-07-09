@@ -1,31 +1,6 @@
-{% block title %}Artists List{% endblock %}
+{% extends 'base.html.twig' %}
 
 {% block body %}
-    <style>
-        body {
-            background-color: #bf6fed;
-            font-size: 18px;
-            font-family: Arial, sans-serif;
-            margin: 2rem;
-        }
-        table {
-            width: 100%;
-            max-width: 700px;
-            border-collapse: collapse;
-            margin: 0 auto;
-            background: white;
-        }
-        th, td {
-            border: 1px solid #333;
-            padding: 10px 15px;
-            text-align: left;
-        }
-        th {
-            background-color: #a77bd4;
-            color: white;
-        }
-
-    </style>
 
     <h1 style="text-align:center; color: white;">Artists</h1>
 
@@ -34,7 +9,9 @@
         <tr>
             <th>Name</th>
             <th>Musical Genre</th>
-            <th>Edit</th>
+            {% if is_granted('ROLE_ADMIN') %}
+                <th>Edit</th>
+            {% endif %}
         </tr>
         </thead>
         <tbody>
@@ -46,16 +23,18 @@
                     </a>
                 </td>
                 <td>{{ artist.musicalGenre }}</td>
-                <td>
-                    <form method="post" action="{{ path('artist_delete', {'id': artist.id}) }}"
-                          onsubmit="return confirm('Are you sure?');">
-                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ artist.id) }}">
-                        <button class="btn-danger">Delete</button>
-                    </form>
-                    <form method="post" action="{{ path('artist_update', {'id': artist.id}) }}">
-                        <button type="submit">Update</button>
-                    </form>
-                </td>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <td>
+                        <form method="post" action="{{ path('artist_delete', {'id': artist.id}) }}"
+                              onsubmit="return confirm('Are you sure?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ artist.id) }}">
+                            <button class="btn-danger">Delete</button>
+                        </form>
+                        <form method="post" action="{{ path('artist_update', {'id': artist.id}) }}">
+                            <button type="submit">Update</button>
+                        </form>
+                    </td>
+                {% endif %}
             </tr>
         {% else %}
             <tr>
@@ -64,11 +43,13 @@
         {% endfor %}
         </tbody>
     </table>
-    <div style="text-align: center; margin-top: 20px;">
-        <form method="post" action="{{ path('artist_add') }}">
-            <button type="submit">Add</button>
-        </form>
-    </div>
+    {% if is_granted('ROLE_ADMIN') %}
+        <div style="text-align: center; margin-top: 20px;">
+            <form method="post" action="{{ path('artist_add') }}">
+                <button type="submit">Add</button>
+            </form>
+        </div>
+    {% endif %}
 {% endblock %}
 
 

@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User Details{% endblock %}
+
+{% block body %}
+    <h1 style="text-align:center; color: white;">User Details</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>City</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ details.name }}</td>
+            <td>{{ details.age }}</td>
+            <td>{{ details.city }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h2 style="text-align: center; color: white;">User Tickets</h2>
+
+    {% if purchases is empty %}
+        <p style="text-align:center; color:white;">This user has no purchases.</p>
+    {% else %}
+        <table>
+            <thead>
+            <tr>
+                <th>Festival</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for purchase in purchases %}
+                <tr>
+                    <td>{{ purchase.festival.name }}</td>
+                    <td>
+                        {{ purchase.festival.startDate ? purchase.festival.startDate|date('Y-m-d') : 'N/A' }}
+                    </td>
+                    <td>
+                        {{ purchase.festival.endDate ? purchase.festival.endDate|date('Y-m-d') : 'N/A' }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+    <div style="text-align: center; margin-top: 20px;">
+        <form action="{{ path('app_logout') }}" method="post">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+{% endblock %}

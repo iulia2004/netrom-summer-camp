@@ -24,10 +24,7 @@ class UserDetails
     private ?int $age = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $email = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $role = null;
+    private ?string $city = null;
 
     public function getId(): ?int
     {
@@ -70,27 +67,16 @@ class UserDetails
         return $this;
     }
 
-    public function getEmail(): ?string
+    public function getCity(): ?string
     {
-        return $this->email;
+        return $this->city;
     }
 
-    public function setEmail(string $email): static
+    public function setCity(string $city): static
     {
-        $this->email = $email;
+        $this->city = $city;
 
         return $this;
     }
 
-    public function getRole(): ?string
-    {
-        return $this->role;
-    }
-
-    public function setRole(string $role): static
-    {
-        $this->role = $role;
-
-        return $this;
-    }
 }

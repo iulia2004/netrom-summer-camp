@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}ShowTime{% endblock %}</title>
+    <style>
+        body {
+            background-color: #3a1a5c;
+            font-size: 18px;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #f0d7ff;
+        }
+        h1 {
+            text-align: center;
+            color: #f0d7ff;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 5px #d884ff;
+        }
+        table {
+            width: 100%;
+            max-width: 700px;
+            border-collapse: collapse;
+            margin: 0 auto;
+            background: #210d3a;
+            color: #f0d7ff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 20px #a97aff88;
+        }
+        th, td {
+            border: 1px solid #7331a0;
+            padding: 10px 15px;
+            text-align: left;
+        }
+        th {
+            background-color: #a77bd4;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        a {
+            color: #d9a3ff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+            color: #ffa1ff;
+        }
+        button {
+            background: linear-gradient(135deg, #b873ff, #9c4dff);
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background: linear-gradient(135deg, #9c4dff, #b873ff);
+        }
+        form {
+            margin-top: 8px;
+        }
+        div[align="center"] {
+            margin-top: 1rem;
+            color: #ffa1ff;
+            font-weight: bold;
+            text-shadow: 0 0 4px #d884ff;
+        }
+        div[style*="text-align: center"] {
+            margin-top: 20px;
+        }
+
+        nav.navbar {
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(58, 26, 92, 0.9);
+            padding: 1rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+            border-radius: 0;
+        }
+
+
+        nav.navbar a {
+            color: #d9a3ff;
+            text-decoration: none;
+            font-weight: bold;
+            margin-right: 2rem;
+            transition: color 0.3s ease;
+            font-size: 1rem;
+        }
+
+        nav.navbar a:last-child {
+            margin-right: 0;
+        }
+
+        nav.navbar a:hover {
+            color: #ffa1ff;
+            text-decoration: underline;
+        }
+
+        .navbar-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+        }
+
+        main {
+            padding-top: 65px;
+            margin: 0 2rem;
+        }
+    </style>
+</head>
+
+<body>
+<nav class="navbar">
+    <div class="navbar-left">
+        <a href="{{ path('festival_index') }}">Festivals</a>
+        <a href="{{ path('artist_index') }}">Artists</a>
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('user_index') }}">Users</a>
+        {% endif %}
+    </div>
+    <div class="header">
+        {% if app.user %}
+            <a href="{{ path('app_user_details_show', {'id': app.user.id}) }}">Account</a>
+
+        {% else %}
+            <a href="{{ path('app_login') }}">Login</a>
+            <a href="{{ path('app_register') }}">Register</a>
+        {% endif %}
+    </div>
+</nav>
+
+<main>
+    {% block body %}
+    {% endblock %}
+</main>
+</body>
+</html>

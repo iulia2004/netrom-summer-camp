@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Festival;
+use App\Entity\Purchase;
 use App\Form\FestivalForm;
 use App\Repository\ArtistRepository;
 use App\Repository\FestivalRepository;
@@ -126,4 +127,20 @@ final class FestivalController extends AbstractController
         ]);
     }
 
+    #[Route('/festival/{id}/purchase', name: 'festival_purchase')]
+    public function addFestivalPurchase(Request $request, EntityManagerInterface $entityManager, int $id): Response {
+        $festival = $entityManager->getRepository(Festival::class)->find($id);
+        $user = $this->getUser();
+
+        $purchase = new Purchase();
+        $purchase->setUser($user);
+        $purchase->setFestival($festival);
+
+        $entityManager->persist($purchase);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Purchase successful for festival: ' . $festival->getName());
+
+        return $this->redirectToRoute('festival_index');
+    }
 }

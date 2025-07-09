@@ -1,32 +1,7 @@
-{% block title %}Festivals List{% endblock %}
+{% extends 'base.html.twig' %}
 
 {% block body %}
-    <style>
-        body {
-            background-color: #bf6fed;
-            font-size: 18px;
-            font-family: Arial, sans-serif;
-            margin: 2rem;
-        }
-        table {
-            width: 100%;
-            max-width: 700px;
-            border-collapse: collapse;
-            margin: 0 auto;
-            background: white;
-        }
-        th, td {
-            border: 1px solid #333;
-            padding: 10px 15px;
-            text-align: left;
-        }
-        th {
-            background-color: #a77bd4;
-            color: white;
-        }
-    </style>
-
-    <h1 style="text-align:center; color: white;">Festivals</h1>
+    <h1>Festivals</h1>
 
     <table>
         <thead>
@@ -39,46 +14,65 @@
             {% if is_granted('ROLE_ADMIN') %}
                 <th>Edit</th>
             {% endif %}
+            {% if is_granted('ROLE_USER') %}
+                <th>Purchase</th>
+            {% endif %}
         </tr>
         </thead>
         <tbody>
         {% for festival in festivals %}
             <tr>
-                <td>
-                    <a href="{{ path('festival_lineup', {'id': festival.id}) }}">
-                        {{ festival.name }}
-                    </a>
-                </td>
+                <td><a href="{{ path('festival_lineup', {'id': festival.id}) }}">{{ festival.name }}</a></td>
                 <td>{{ festival.location }}</td>
                 <td>{{ festival.startDate ? festival.startDate|date('Y-m-d') : '' }}</td>
                 <td>{{ festival.endDate ? festival.endDate|date('Y-m-d') : '' }}</td>
                 <td>{{ festival.price }}</td>
                 {% if is_granted('ROLE_ADMIN') %}
                     <td>
-                        <form method="post" action="{{ path('festival_delete', {'id': festival.id}) }}" onsubmit="return confirm('Are you sure you want to delete this festival?');">
+                        <form method="post" action="{{ path('festival_delete', {'id': festival.id}) }}" onsubmit="return confirm('Are you sure?');">
                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ festival.id) }}">
-                            <button type="submit" class="btn btn-danger">Delete</button>
+                            <button type="submit">Delete</button>
                         </form>
                         <form method="post" action="{{ path('festival_update', {'id': festival.id}) }}">
                             <button type="submit">Update</button>
                         </form>
                     </td>
                 {% endif %}
+                {% if is_granted('ROLE_USER') %}
+                    <td>
+                        <form method="post" action="{{ path('festival_purchase', {'id': festival.id}) }}">
+                            <input type="hidden" name="_token" value="{{ csrf_token('purchase' ~ festival.id) }}">
+                            <button type="submit">Purchase</button>
+                        </form>
+                    </td>
+                {% endif %}
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">No festivals found.</td>
+                <td colspan="7">No festivals found.</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+
     {% if is_granted('ROLE_ADMIN') %}
-        <div style="text-align: center; margin-top: 20px;">
+        <div style="text-align: center;">
             <form method="post" action="{{ path('festival_add') }}">
-                <button type="submit">Add</button>
+                <button type="submit">Add festival</button>
+            </form>
+        </div>
+    {% endif %}
+    {% if is_granted('ROLE_ADMIN') %}
+        <div style="text-align: center;">
+            <form method="post" action="{{ path('lineup_add') }}">
+                <button type="submit">Add artist to festival</button>
             </form>
         </div>
     {% endif %}
 
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div align="center"><strong>{{ message }}</strong></div>
+        {% endfor %}
+    {% endfor %}
 {% endblock %}
-

@@ -1,31 +1,6 @@
-{% block title %}Artists{% endblock %}
+{% extends 'base.html.twig' %}
 
 {% block body %}
-    <style>
-        body {
-            background-color: #bf6fed;
-            font-size: 18px;
-            font-family: Arial, sans-serif;
-            margin: 2rem;
-        }
-        table {
-            width: 100%;
-            max-width: 700px;
-            border-collapse: collapse;
-            margin: 0 auto;
-            background: white;
-        }
-        th, td {
-            border: 1px solid #333;
-            padding: 10px 15px;
-            text-align: left;
-        }
-        th {
-            background-color: #a77bd4;
-            color: white;
-        }
-    </style>
-
     {% if festival is defined %}
         <h1 style="text-align:center; color: white;">Artists at {{ festival.name }}</h1>
     {% else %}
@@ -52,4 +27,12 @@
         {% endfor %}
         </tbody>
     </table>
+    {% if is_granted('ROLE_USER') %}
+        <div style="text-align: center; margin-top: 20px;">
+            <form method="post" action="{{ path('festival_purchase', {'id': festival.id}) }}">
+                <input type="hidden" name="_token" value="{{ csrf_token('purchase' ~ festival.id) }}">
+                <button type="submit">Purchase</button>
+            </form>
+        </div>
+    {% endif %}
 {% endblock %}
