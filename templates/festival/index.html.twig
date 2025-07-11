@@ -15,7 +15,9 @@
                 <th>Edit</th>
             {% endif %}
             {% if is_granted('ROLE_USER') %}
+            {% if not is_granted('ROLE_ADMIN') %}
                 <th>Purchase</th>
+                {% endif %}
             {% endif %}
         </tr>
         </thead>
@@ -39,12 +41,14 @@
                     </td>
                 {% endif %}
                 {% if is_granted('ROLE_USER') %}
+                    {% if not is_granted('ROLE_ADMIN') %}
                     <td>
                         <form method="post" action="{{ path('festival_purchase', {'id': festival.id}) }}">
                             <input type="hidden" name="_token" value="{{ csrf_token('purchase' ~ festival.id) }}">
                             <button type="submit">Purchase</button>
                         </form>
                     </td>
+                {% endif %}
                 {% endif %}
             </tr>
         {% else %}
@@ -54,6 +58,12 @@
         {% endfor %}
         </tbody>
     </table>
+
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div align="center"><strong>{{ message }}</strong></div>
+        {% endfor %}
+    {% endfor %}
 
     {% if is_granted('ROLE_ADMIN') %}
         <div style="text-align: center;">
@@ -69,10 +79,4 @@
             </form>
         </div>
     {% endif %}
-
-    {% for label, messages in app.flashes %}
-        {% for message in messages %}
-            <div align="center"><strong>{{ message }}</strong></div>
-        {% endfor %}
-    {% endfor %}
 {% endblock %}

@@ -25,15 +25,6 @@ class ArtistController extends AbstractController
         ]);
     }
 
-//    #[Route('/artists/{id}', name: 'artist_show', methods: ['GET'])]
-//    public function getArtist(ArtistRepository $artistRepository, int $id): Response
-//    {
-//        $artist = $artistRepository->find($id);
-//        return $this->render('artist/show.html.twig', [
-//            'artist' => $artist,
-//        ]);
-//    }
-
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/artists/delete/{id}', name: 'artist_delete', methods: ['POST'])]
     public function deleteArtist(int $id, ArtistRepository $artistRepository, EntityManagerInterface $entityManager): Response

@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -62,11 +63,13 @@ final class FestivalController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
-            $festival = $form->getData();
-
-            $entityManager->persist($festival);
-            $entityManager->flush();
-            return $this->redirectToRoute('festival_index');
+            if ($festival->getEndDate() <= $festival->getStartDate()) {
+                $form->get('end_date')->addError(new FormError('End date must be later than start date.'));
+            } else {
+                $entityManager->persist($festival);
+                $entityManager->flush();
+                return $this->redirectToRoute('festival_index');
+            }
         }
 
         return $this->render('festival/form.html.twig', [
@@ -94,10 +97,14 @@ final class FestivalController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
-            $festival = $form->getData();
-
-            $entityManager->flush();
-            return $this->redirectToRoute('festival_index');
+            if ($festival->getEndDate() <= $festival->getStartDate()) {
+                $form->get('end_date')->addError(new FormError('End date must be later than start date.'));
+            }
+            else {
+                $festival = $form->getData();
+                $entityManager->flush();
+                return $this->redirectToRoute('festival_index');
+            }
         }
 
         return $this->render('festival/form.html.twig', [

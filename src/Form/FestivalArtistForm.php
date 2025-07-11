@@ -20,10 +20,13 @@ class FestivalArtistForm extends AbstractType
                 'choice_label' => 'name',
                 'placeholder' => 'Select a festival',
             ])
-            ->add('artist', EntityType::class, [
+            ->add('artists', EntityType::class, [
                 'class' => Artist::class,
                 'choice_label' => 'name',
-                'placeholder' => 'Select an artist',
+                'placeholder' => 'Select artists',
+                'multiple' => true,
+                'expanded' => false,
+                'mapped' => false,
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'Add Artist to Festival'

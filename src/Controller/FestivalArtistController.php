@@ -28,25 +28,34 @@ final class FestivalArtistController extends AbstractController
 
     #[IsGranted('ROLE_ADMIN')]
     #[Route('festival/artist/add', name: 'lineup_add')]
-    public function addLineup(Request $request, EntityManagerInterface $entityManager): Response {
+    public function addLineup(Request $request, EntityManagerInterface $entityManager): Response
+    {
         $festivalArtist = new FestivalArtist();
         $form = $this->createForm(FestivalArtistForm::class, $festivalArtist);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $existing = $entityManager->getRepository(FestivalArtist::class)->findOneBy([
-                'festival' => $festivalArtist->getFestival(),
-                'artist' => $festivalArtist->getArtist()
-            ]);
-            if ($existing) {
-                $this->addFlash('warning', 'This artist is already part of the selected festival.');
-            } else {
-                $entityManager->persist($festivalArtist);
-                $entityManager->flush();
-                $this->addFlash('success', 'Artist added to festival.');
-                return $this->redirectToRoute('app_festival_artist');
+            $festival = $form->get('festival')->getData();
+            $artists = $form->get('artists')->getData();
+            $repo = $entityManager->getRepository(FestivalArtist::class);
+
+            foreach ($artists as $artist) {
+                $exists = $repo->findOneBy(['festival' => $festival, 'artist' => $artist]);
+                if (!$exists) {
+                    $fa = new FestivalArtist();
+                    $fa->setFestival($festival);
+                    $fa->setArtist($artist);
+                    $entityManager->persist($fa);
+                }
             }
+
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Artists added to the festival.');
+
+            return $this->redirectToRoute('festival_index', ['id' => $festival->getId()]);
         }
+
         return $this->render('festival_artist/form.html.twig', [
             'form' => $form->createView(),
         ]);

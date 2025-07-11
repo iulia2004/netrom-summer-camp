@@ -32,39 +32,41 @@ final class UserController extends AbstractController
         $user = $userRepository->find($id);
 
         if (!$user) {
-            throw $this->createNotFoundException('Festival not found.');
+            throw $this->createNotFoundException('User not found.');
         }
 
         $entityManager->remove($user);
         $entityManager->flush();
 
-        return $this->redirectToRoute('users_index');
+        return $this->redirectToRoute('user_index');
     }
 
     #[Route('/users/update/{id}', name: 'user_update')]
-    public function editUsers(int $id, UserRepository $userRepository, EntityManagerInterface $entityManager, Request $request): Response {
+    public function editUsers(int $id, UserRepository $userRepository, EntityManagerInterface $entityManager, Request $request): Response
+    {
         $user = $userRepository->find($id);
 
         if (!$user) {
             throw $this->createNotFoundException('User not found.');
         }
 
-        $user->setRoles($user->getRoles());
-
         $form = $this->createForm(UserForm::class, $user);
 
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
-            $user = $form->getData();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $roles = $form->get('roles')->getData();
+            $user->setRoles($roles);
 
             $entityManager->flush();
+
+            $this->addFlash('success', 'User roles updated.');
+
             return $this->redirectToRoute('user_index');
         }
 
         return $this->render('user/form.html.twig', [
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
-
 }

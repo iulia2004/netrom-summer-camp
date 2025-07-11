@@ -22,34 +22,40 @@
         </tbody>
     </table>
 
+    {% if is_granted('ROLE_USER') %}
+    {% if not is_granted('ROLE_ADMIN') %}
     <h2 style="text-align: center; color: white;">User Tickets</h2>
 
-    {% if purchases is empty %}
-        <p style="text-align:center; color:white;">This user has no purchases.</p>
-    {% else %}
-        <table>
-            <thead>
-            <tr>
-                <th>Festival</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for purchase in purchases %}
+
+        {% if purchases is empty %}
+            <p style="text-align:center; color:white;">This user has no purchases.</p>
+        {% else %}
+            <table>
+                <thead>
                 <tr>
-                    <td>{{ purchase.festival.name }}</td>
-                    <td>
-                        {{ purchase.festival.startDate ? purchase.festival.startDate|date('Y-m-d') : 'N/A' }}
-                    </td>
-                    <td>
-                        {{ purchase.festival.endDate ? purchase.festival.endDate|date('Y-m-d') : 'N/A' }}
-                    </td>
+                    <th>Festival</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% for purchase in purchases %}
+                    <tr>
+                        <td>{{ purchase.festival.name }}</td>
+                        <td>
+                            {{ purchase.festival.startDate ? purchase.festival.startDate|date('Y-m-d') : 'N/A' }}
+                        </td>
+                        <td>
+                            {{ purchase.festival.endDate ? purchase.festival.endDate|date('Y-m-d') : 'N/A' }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+        {%  endif %}
     {% endif %}
+
     <div style="text-align: center; margin-top: 20px;">
         <form action="{{ path('app_logout') }}" method="post">
             <button type="submit">Logout</button>
